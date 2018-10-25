@@ -1,32 +1,35 @@
 const _ = require("lodash");
 
 function sortAndFilter(key) {
-  // reset everything if there is no key or filters
+  let log = "";
+
   if (!key && !_.size(this.filters)) {
+    log += "Reset everything if there is no key or filters.\n";
     this.sortKey = "";
     this.reverse = false;
     this.sortCounter = 0;
     this.sortedData = this.data;
-    return false;
+    return log;
   }
 
-  // if key is supplied, sorting needs to be updated
   if (this.sortKey) {
+    log += "Sort key is supplied, sorting needs to be updated.\n";
     this.reverse = !this.reverse;
     this.sortCounter++;
   }
 
-  // different sort key selected from previous sort
   if (this.sortKey && this.sortKey !== key) {
+    log += "Different sort key selected from previous sort.\n";
     this.reverse = false;
     this.sortCounter = 0;
   }
 
   this.sortKey = key;
+  log += "Sorting.\n";
   this.sortedData = _.sortBy(this.data, [o => _.get(o, this.sortKey)]);
 
-  // reset sorting settings
   if (this.sortCounter >= 3) {
+    log += "Sort counter exceeded 3 sorts.  Reset sorting settings.\n";
     this.sortedData = this.data;
     this.sortKey = "";
     this.reverse = false;
@@ -34,19 +37,22 @@ function sortAndFilter(key) {
   }
 
   if (this.reverse) {
+    log += "Reverse sort.\n";
     this.sortedData = _.reverse(this.sortedData);
   }
 
-  // done sorting, apply filters
-
   if (!_.size(this.filters)) {
-    return false;
+    log += "No filters.  Done sorting.\n";
+    return log;
   }
+
+  log += "Done sorting, apply filters\n";
 
   // filter.value(s) will always be strings
   this.filters.map(filter => {
     switch (filter.type) {
       case "enumerated":
+        log += "Apply enumerated filter.\n";
         this.sortedData = _.filter(this.sortedData, data => {
           return filter.values.includes(
             String(_.get(data, this.mapping[filter.name]))
@@ -54,6 +60,7 @@ function sortAndFilter(key) {
         });
         break;
       case "number":
+        log += "Apply number filter.\n";
         this.sortedData = _.filter(this.sortedData, data => {
           switch (filter.operator) {
             case ">":
@@ -68,6 +75,7 @@ function sortAndFilter(key) {
         });
         break;
       case "search":
+        log += "Apply search filter.\n";
         this.sortedData = _.filter(this.sortedData, data => {
           const regex = new RegExp(filter.value, "i");
           return (
@@ -77,6 +85,8 @@ function sortAndFilter(key) {
         break;
     }
   });
+
+  return log;
 }
 
 module.exports = sortAndFilter;

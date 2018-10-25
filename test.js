@@ -104,7 +104,7 @@ describe("sortAndFilter", function() {
     assert.deepEqual(ctx.sortedData, [{ id: 1 }, { id: 3 }, { id: 2 }]);
   });
 
-  it("should reset the sort settings if run 3x", function() {
+  it("should reset the sort settings if run 2x", function() {
     const ctx = {
       data: unOrderedSet1,
       sortKey: "id",
@@ -112,7 +112,6 @@ describe("sortAndFilter", function() {
       reverse: false,
       sortCounter: 0
     };
-    sortAndFilter.call(ctx, "id");
     sortAndFilter.call(ctx, "id");
     sortAndFilter.call(ctx, "id");
     assert.deepEqual(ctx.sortedData, ctx.data);

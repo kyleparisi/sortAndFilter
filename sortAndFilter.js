@@ -28,7 +28,7 @@ function sortAndFilter(key) {
   log += "Sorting.\n";
   this.sortedData = _.sortBy(this.data, [o => _.get(o, this.sortKey)]);
 
-  if (this.sortCounter >= 3) {
+  if (this.sortCounter >= 2) {
     log += "Sort counter exceeded 3 sorts.  Reset sorting settings.\n";
     this.sortedData = this.data;
     this.sortKey = "";

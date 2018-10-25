@@ -29,7 +29,7 @@ function sortAndFilter(key) {
   this.sortedData = _.sortBy(this.data, [o => _.get(o, this.sortKey)]);
 
   if (this.sortCounter >= 2) {
-    log += "Sort counter exceeded 3 sorts.  Reset sorting settings.\n";
+    log += "Sort counter exceeded 2 sorts.  Reset sorting settings.\n";
     this.sortedData = this.data;
     this.sortKey = "";
     this.reverse = false;

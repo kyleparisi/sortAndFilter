@@ -3,7 +3,7 @@ const _ = require("lodash");
 function sortAndFilter(key) {
   let log = "";
 
-  if (!key && !_.size(this.filters)) {
+  if (!key && !_.size(this.filters) && !this.sortKey) {
     log += "Reset everything if there is no key or filters.\n";
     this.sortKey = "";
     this.reverse = false;
@@ -24,7 +24,7 @@ function sortAndFilter(key) {
     this.sortCounter = 0;
   }
 
-  this.sortKey = key;
+  this.sortKey = key || this.sortKey;
   log += "Sorting.\n";
   this.sortedData = _.sortBy(this.data, [o => _.get(o, this.sortKey)]);
 

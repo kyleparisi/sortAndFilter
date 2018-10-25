@@ -238,4 +238,25 @@ describe("sortAndFilter", function() {
       { id: 3, child: { id: 8 } }
     ]);
   });
+
+  it("should keep the current sort if the filters are removed", function () {
+    // the only time the sortKey is removed is when clicking the same column > 2 times
+    const ctx = {
+      data: unOrderedSet3,
+      sortKey: "id",
+      sortedData: [{}],
+      reverse: false,
+      sortCounter: 0,
+      filters: [],
+      mapping: {
+        Name: "name"
+      }
+    };
+    sortAndFilter.call(ctx);
+    assert.deepEqual(ctx.sortedData, [
+      { id: 1, name: "Lorem", status: 1 },
+      { id: 2, name: "dolor", status: 0 },
+      { id: 3, name: "ipsum", status: 1 }
+    ]);
+  });
 });

@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Search and sort function context.",
   "main": "sortAndFilter.js",
-  "browser": "sortAndFilter.min.js",
   "directories": {
     "test": "test"
   },

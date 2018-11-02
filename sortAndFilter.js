@@ -48,6 +48,9 @@ function sortAndFilter(key) {
 
   log += "Done sorting, apply filters\n";
 
+  log += "Reset page to 1 to apply filters.\n";
+  _.set(this, "page", 1);
+
   // filter.value(s) will always be strings
   this.filters.map(filter => {
     switch (filter.type) {

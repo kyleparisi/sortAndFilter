@@ -259,4 +259,29 @@ describe("sortAndFilter", function() {
       { id: 3, name: "ipsum", status: 1 }
     ]);
   });
+
+  it("should set page to 1", function () {
+    // When table is set to a page other than 1, the filters applied might show
+    // no results based on the page being set > amount of data
+    const ctx = {
+      data: unOrderedSet3,
+      sortKey: "id",
+      sortedData: [{}],
+      reverse: false,
+      sortCounter: 0,
+      page: 3,
+      filters: [
+        {
+          name: "Name",
+          type: "search",
+          value: "o"
+        }
+      ],
+      mapping: {
+        Name: "name"
+      }
+    };
+    sortAndFilter.call(ctx);
+    assert.deepEqual(ctx.page, 1);
+  });
 });

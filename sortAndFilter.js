@@ -26,11 +26,11 @@ function sortAndFilter(key) {
 
   this.sortKey = key || this.sortKey;
   log += "Sorting.\n";
-  this.sortedData = _.sortBy(this.data, [o => _.get(o, this.sortKey)]);
+  let sortedData = _.sortBy(this.data, [o => _.get(o, this.sortKey)]);
 
   if (this.sortCounter >= 2) {
     log += "Sort counter exceeded 2 sorts.  Reset sorting settings.\n";
-    this.sortedData = this.data;
+    sortedData = this.data;
     this.sortKey = "";
     this.reverse = false;
     this.sortCounter = 0;
@@ -38,11 +38,12 @@ function sortAndFilter(key) {
 
   if (this.reverse) {
     log += "Reverse sort.\n";
-    this.sortedData = _.reverse(this.sortedData);
+    sortedData = _.reverse(sortedData);
   }
 
   if (!_.size(this.filters)) {
     log += "No filters.  Done sorting.\n";
+    this.sortedData = sortedData;
     return log;
   }
 
@@ -56,7 +57,7 @@ function sortAndFilter(key) {
     switch (filter.type) {
       case "enumerated":
         log += "Apply enumerated filter.\n";
-        this.sortedData = _.filter(this.sortedData, data => {
+        sortedData = _.filter(sortedData, data => {
           return filter.values.includes(
             String(_.get(data, this.mapping[filter.name]))
           );
@@ -64,7 +65,7 @@ function sortAndFilter(key) {
         break;
       case "number":
         log += "Apply number filter.\n";
-        this.sortedData = _.filter(this.sortedData, data => {
+        sortedData = _.filter(sortedData, data => {
           switch (filter.operator) {
             case ">":
               return _.get(data, this.mapping[filter.name]) > filter.value;
@@ -79,7 +80,7 @@ function sortAndFilter(key) {
         break;
       case "search":
         log += "Apply search filter.\n";
-        this.sortedData = _.filter(this.sortedData, data => {
+        sortedData = _.filter(sortedData, data => {
           const regex = new RegExp(filter.value, "i");
           return (
             String(_.get(data, this.mapping[filter.name])).search(regex) !== -1
@@ -88,6 +89,8 @@ function sortAndFilter(key) {
         break;
     }
   });
+
+  this.sortedData = sortedData;
 
   return log;
 }

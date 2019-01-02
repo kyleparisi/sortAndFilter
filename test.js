@@ -284,4 +284,30 @@ describe("sortAndFilter", function() {
     sortAndFilter.call(ctx);
     assert.deepEqual(ctx.page, 1);
   });
+
+  it("should use key in the filter over name", function () {
+    const ctx = {
+      data: unOrderedSet3,
+      sortKey: "id",
+      sortedData: [{}],
+      reverse: false,
+      sortCounter: 0,
+      page: 3,
+      filters: [
+        {
+          type: "search",
+          value: "o",
+          key: "name"
+        }
+      ],
+      mapping: {
+        name: "name"
+      }
+    };
+    sortAndFilter.call(ctx);
+    assert.deepEqual(ctx.sortedData, [
+      { id: 1, name: "Lorem", status: 1 },
+      { id: 2, name: "dolor", status: 0 }
+    ]);
+  });
 });

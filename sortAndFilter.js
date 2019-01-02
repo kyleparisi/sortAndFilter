@@ -54,12 +54,13 @@ function sortAndFilter(key) {
 
   // filter.value(s) will always be strings
   this.filters.map(filter => {
+    const key = filter.key || filter.name;
     switch (filter.type) {
       case "enumerated":
         log += "Apply enumerated filter.\n";
         sortedData = _.filter(sortedData, data => {
           return filter.values.includes(
-            String(_.get(data, this.mapping[filter.name]))
+            String(_.get(data, this.mapping[key]))
           );
         });
         break;
@@ -68,11 +69,11 @@ function sortAndFilter(key) {
         sortedData = _.filter(sortedData, data => {
           switch (filter.operator) {
             case ">":
-              return _.get(data, this.mapping[filter.name]) > filter.value;
+              return _.get(data, this.mapping[key]) > filter.value;
             case "<":
-              return _.get(data, this.mapping[filter.name]) < filter.value;
+              return _.get(data, this.mapping[key]) < filter.value;
             case "=":
-              return _.get(data, this.mapping[filter.name]) == filter.value;
+              return _.get(data, this.mapping[key]) == filter.value;
             default:
               return false;
           }
@@ -83,7 +84,7 @@ function sortAndFilter(key) {
         sortedData = _.filter(sortedData, data => {
           const regex = new RegExp(filter.value, "i");
           return (
-            String(_.get(data, this.mapping[filter.name])).search(regex) !== -1
+            String(_.get(data, this.mapping[key])).search(regex) !== -1
           );
         });
         break;

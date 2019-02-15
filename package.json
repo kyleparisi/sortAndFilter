@@ -7,10 +7,10 @@
     "test": "test"
   },
   "dependencies": {
-    "browserify": "^16.2.3",
     "lodash": "^4.17.11"
   },
   "devDependencies": {
+    "browserify": "^16.2.3",
     "mocha": "^5.2.0",
     "tinyify": "^2.5.0"
   },

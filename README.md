@@ -5,10 +5,10 @@ A library to modify local context of a vuejs table component.  Please read the `
 ## Features
 
 - string path selection sorting (e.g. "child.id")
-- filter types: enumerated, number, and search
+- filter types: enumerated, number, search, and custom filters
 - sorting resets when clicking column 3x
 
-## Usage
+## Sorting Usage
 
 ```js
 // standard

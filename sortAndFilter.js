@@ -88,6 +88,13 @@ function sortAndFilter(key) {
           );
         });
         break;
+      case "custom":
+        if (!filter.filter) {
+          return false;
+        }
+        log += "Apply custom filter.\n";
+        sortedData = _.filter(sortedData, data => filter.filter(data, filter.value));
+        break;
     }
   });
 

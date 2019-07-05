@@ -1,5 +1,5 @@
 {
-  "name": "searchAndSort",
+  "name": "sort-and-filter",
   "version": "1.0.0",
   "description": "Search and sort function context.",
   "main": "sortAndFilter.js",
